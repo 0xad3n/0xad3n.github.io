@@ -135,15 +135,17 @@ In the admin.php source code, there is some minimal blacklists that is implement
 ![image](/assets/img/code1.png){: .mx-auto.d-block :}
 ![image](/assets/img/burp2.png){: .mx-auto.d-block :}
 
-When exploring through the directory, it is reveal that there is another interesting file called `./nocturnal_database/nocturnal_database.db` which exposed all the users and password hashes through encoded the file to base64 to exfiltrate the database. On all of the three password hashes, tobias are able to be decrypted and use it to gain access through ssh.
+When exploring through the directory, it is reveal that there is another interesting file called `./nocturnal_database/nocturnal_database.db` which exposed all the users and password hashes through encoded the file to base64 to exfiltrate the database. On all of the three password hashes, only tobias and kavi are able to be decrypted which lead to just tobias can make connection through ssh with the exposed credential.
 
 ![image](/assets/img/burp3.png){: .mx-auto.d-block :}
 
-| User | Password |
-| :------ |:---------------- |
-| admin | Six |
-| amanda | Eleven |
-| tobias | Eight |
+| User | Password | Decrypted |
+| :------ |:-------------------------- | :-------------------- |
+| admin | d725aeba143f575736b07e045d8ceebb | N/A |
+| amanda | df8b20aa0c935023f99ea58358fb63c4 | N/A |
+| tobias | 55c82b1ccd55ab219b3b109b07d5061d | slowmotionapocalypse |
+| kavi | f38cde1654b39fea2bd4f72f1ae4cdda | kavi |
+| e0Al5 | 101ad4543a96a7fd84908fd0d802e7db | N/A |
 
 ![image](/assets/img/tobiasssh.png){: .mx-auto.d-block :}
 
