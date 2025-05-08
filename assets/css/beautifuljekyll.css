@@ -869,7 +869,7 @@ table tr td :last-child {
 
 code {
   padding: 0.125rem 0.25rem;
-  color: #ffb86c;
+  color: #eaeaea;
   background-color: #1e1e1e;
   border-radius: 0.25rem;
 }
@@ -885,6 +885,8 @@ pre {
   line-height: 1.5em;
   border-radius: 0.25rem;
   padding: 0.59375rem;
+  background-color: #1e1e1e;
+  color: #eaeaea;
 }
 .highlight pre {
   border: none;
@@ -892,11 +894,8 @@ pre {
   margin: 0;
 }
 .highlight > pre {
-  background-image: none;
   background-color: #1e1e1e;
-  background-size: auto 3em;
-  background-position-y: 0.625rem;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid #333;
   border-left: 0.4375rem solid #444;
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
