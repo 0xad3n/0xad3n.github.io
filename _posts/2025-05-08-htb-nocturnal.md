@@ -128,11 +128,61 @@ Output from the user enumeration reveal that it is vulnerable to insecure direct
 
 With the exposed credential, try to use it on ssh seems no luck. This leave us to login to web using those credential and luckly amanda able to access admin page. The admin page can review source code of each pages available in the web and the most interesting part are on `admin.php`.
 
-![image](/assets/img/blacklist.png){: .mx-auto.d-block :}
+{% highlight php linenos %}
+function cleanEntry($entry) {
+    $blacklist_chars = [';', '&', '|', '$', ' ', '`', '{', '}', '&&'];
+
+    foreach ($blacklist_chars as $char) {
+        if (strpos($entry, $char) !== false) {
+            return false; // Malicious input detected
+        }
+    }
+
+    return htmlspecialchars($entry, ENT_QUOTES, 'UTF-8');
+}
+{% endhighlight %}
 
 In the admin.php source code, there is some minimal blacklists that is implement to avoid user from doing the command injection. It is because from user input the `password` would be directly pass in the command as part of one full command to make a backup zip files. But this can be easily bypass with `\r\n` where this will be the point to split the command to execute another one and `\t` as substitue to space that has been blacklists.
 
-![image](/assets/img/code1.png){: .mx-auto.d-block :}
+{% highlight php linenos %}
+$password = cleanEntry($_POST['password']);
+$backupFile = "backups/backup_" . date('Y-m-d') . ".zip";
+
+if ($password === false) {
+        echo "<div class='error-message'>Error: Try another password.</div>";
+} else {
+        $logFile = '/tmp/backup_' . uniqid() . '.log';
+       
+        $command = "zip -x './backups/*' -r -P " . $password . " " . $backupFile . " .  > " . $logFile . " 2>&1 &";
+        
+        $descriptor_spec = [
+            0 => ["pipe", "r"], // stdin
+            1 => ["file", $logFile, "w"], // stdout
+            2 => ["file", $logFile, "w"], // stderr
+        ];
+
+        $process = proc_open($command, $descriptor_spec, $pipes);
+        if (is_resource($process)) {
+            proc_close($process);
+        }
+
+        sleep(2);
+
+        $logContents = file_get_contents($logFile);
+        if (strpos($logContents, 'zip error') === false) {
+            echo "<div class='backup-success'>";
+            echo "<p>Backup created successfully.</p>";
+            echo "<a href='" . htmlspecialchars($backupFile) . "' class='download-button' download>Download Backup</a>";
+            echo "<h3>Output:</h3><pre>" . htmlspecialchars($logContents) . "</pre>";
+            echo "</div>";
+        } else {
+            echo "<div class='error-message'>Error creating the backup.</div>";
+        }
+
+        unlink($logFile);
+}
+{% endhighlight %}
+
 ![image](/assets/img/burp2.png){: .mx-auto.d-block :}
 
 When exploring through the directory, it is reveal that there is another interesting file called `./nocturnal_database/nocturnal_database.db` which exposed all the users and password hashes through encoded the file to base64 to exfiltrate the database. On all of the three password hashes, only tobias and kavi are able to be decrypted which lead to just tobias can make connection through ssh with the exposed credential.
