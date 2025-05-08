@@ -885,6 +885,8 @@ pre {
   line-height: 1.5em;
   border-radius: 0.25rem;
   padding: 0.59375rem;
+  background-color: #1e1e1e;
+  color: #eaeaea;
 }
 .highlight pre {
   border: none;
@@ -895,7 +897,7 @@ pre {
   background-color: #1e1e1e;
   background-size: auto 3em;
   background-position-y: 0.625rem;
-  border: 1px solid #333;
+  border: 1px solid rgba(51, 51, 51, 0.1);
   border-left: 0.4375rem solid #444;
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
