@@ -1,20 +1,20 @@
 ---
 layout: post
 title: HTB Nocturnal Writeup
-subtitle: Provide an in-depth explanation of exposed credentials, command injection, and leveraging known vulnerabilities in an application to gain root access
+subtitle: Detailed overview of exposed credentials, command injection, and exploiting known application vulnerabilities to gain root access.
 tags: [htb, linux, writeup]
 thumbnail-img: /assets/img/thumb1.png
 author: ad3n
 ---
 
-Nocturnal is a Linux-based machine categorized as Easy difficulty. This post provides a step-by-step walkthrough to gain root access on the machine.
+Nocturnal is a Linux-based machine categorized as easy difficulty. This post provides a step-by-step walkthrough to gain root access on the machine.
 
 ## Scanning & Enumeration
 
 ### NMAP Scan
 
-{% highlight shell linenos %}
-nmap -A -sC -sV -Pn 10.10.11.64
+{% highlight bash linenos %}
+└─$ nmap -A -sC -sV -Pn 10.10.11.64
 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-05-08 06:30 EDT
 Nmap scan report for nocturnal.htb (10.10.11.64)
@@ -40,3 +40,40 @@ OS details: Linux 4.15 - 5.19, MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)
 Network Distance: 2 hops
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 {% endhighlight %}
+
+In summary, there is only 2 open ports which consist of `ssh` and `http`. Since the ssh port is on the latest version, we will shift our target to http and fuzz the directory to discover any interesting endpoint.
+
+{: .box-note}
+**Note:** Add `10.10.11.64` in `/etc/hosts` file and named it to `nocturnal.htb`.
+
+![Webnocturnal](/assets/img/webnocturnal.png){: .mx-auto.d-block :}
+
+## Directory Enumeration
+
+{% highlight bash linenos %}
+└─$ gobuster dir -u http://nocturnal.htb/ -w /usr/share/wordlists/dirb/common.txt                                                                   
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://nocturnal.htb/
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/admin.php            (Status: 302) [Size: 0] [--> login.php]
+/backups              (Status: 301) [Size: 178] [--> http://nocturnal.htb/backups/]
+/index.php            (Status: 200) [Size: 1524]
+/uploads              (Status: 403) [Size: 162]
+Progress: 4614 / 4615 (99.98%)
+===============================================================
+Finished
+===============================================================
+{% endhighlight %}
+
+
