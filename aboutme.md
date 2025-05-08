@@ -13,4 +13,4 @@ What else do you need?
 
 ### My story
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my story](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and it will answer **all** your questions.
+Honestly, my memory’s a bit fuzzy—why not just check out [my story](https://www.youtube.com/watch?v=dQw4w9WgXcQ)? It’ll clear everything up. 
