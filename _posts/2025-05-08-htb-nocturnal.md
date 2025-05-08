@@ -225,3 +225,4 @@ Using the password from tobias and username as `admin` we can login into the isp
 
 ## Summary
 
+It began with an IDOR vulnerability that revealed user files—small at first, but enough to build on. A weak blacklist meant command injection was still possible using tricks like carriage returns and tabs. That led to finding a local web service, and with Chisel, it was easy to forward and access it externally. The service was running outdated software with a known exploit, which finally provided root access.
