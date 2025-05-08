@@ -220,6 +220,8 @@ To access the web ispconfig on our attacker machine, we will use `chisel` to por
 
 Using the password from tobias and username as `admin` we can login into the ispconfig. Further analysis found that the version that ispconfig currently running is `3.2.2` which eventually there is known vulnerablity [CVE-2023-46818](https://nvd.nist.gov/vuln/detail/CVE-2023-46818) effected in this version whereby PHP code injection can be achieved. Since this web are running on high privilage user, using this script from [ajdumanhug](https://github.com/ajdumanhug/CVE-2023-46818) will finally achieved as root!
 
+![image](/assets/img/adminaccess.png){: .mx-auto.d-block :}
+
 ![image](/assets/img/rootnocturnal.png){: .mx-auto.d-block :}
 
 
