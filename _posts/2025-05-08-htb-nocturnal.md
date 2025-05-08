@@ -126,3 +126,27 @@ Output from the user enumeration reveal that it is vulnerable to insecure direct
 ![image](/assets/img/idor.png){: .mx-auto.d-block :}
 ![image](/assets/img/expass.png){: .mx-auto.d-block :}
 
+With the exposed credential, try to use it on ssh seems no luck. This leave us to login to web using those credential and luckly amanda able to access admin page. The admin page can review source code of each pages available in the web and the most interesting part are on `admin.php`.
+
+![image](/assets/img/blacklist.png){: .mx-auto.d-block :}
+
+In the admin.php source code, there is some minimal blacklists that is implement to avoid user from doing the command injection. It is because from user input the `password` would be directly pass in the command as part of one full command to make a backup zip files. But this can be easily bypass with `\r\n` where this will be the point to split the command to execute another one and `\t` as substitue to space that has been blacklists.
+
+![image](/assets/img/code1.png){: .mx-auto.d-block :}
+![image](/assets/img/burp2.png){: .mx-auto.d-block :}
+
+When exploring through the directory, it is reveal that there is another interesting file called `./nocturnal_database/nocturnal_database.db` which exposed all the users and password hashes through encoded the file to base64 to exfiltrate the database. On all of the three password hashes, tobias are able to be decrypted and use it to gain access through ssh.
+
+![image](/assets/img/burp3.png){: .mx-auto.d-block :}
+
+| User | Password |
+| :------ |:---------------- |
+| admin | Six |
+| amanda | Eleven |
+| tobias | Eight |
+
+![image](/assets/img/tobiasssh.png){: .mx-auto.d-block :}
+
+
+## Privilege Escalation To Root
+
