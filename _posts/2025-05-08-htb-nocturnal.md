@@ -124,6 +124,7 @@ tobias                  [Status: 200, Size: 3037, Words: 1174, Lines: 129, Durat
 Output from the user enumeration reveal that it is vulnerable to insecure direct object reference (IDOR) whereby when visiting each users will reveal what files that available for user to download. From those three users, only amanda has file called `privacy.odt` which reveal the message from nocturnal IT team that exposed amanda temporary password.
 
 ![image](/assets/img/idor.png){: .mx-auto.d-block :}
+
 ![image](/assets/img/expass.png){: .mx-auto.d-block :}
 
 With the exposed credential, try to use it on ssh seems no luck. This leave us to login to web using those credential and luckly amanda able to access admin page. The admin page can review source code of each pages available in the web and the most interesting part are on `admin.php`.
@@ -201,4 +202,26 @@ When exploring through the directory, it is reveal that there is another interes
 
 
 ## Privilege Escalation To Root
+
+Upon analyze on the server reveal that there is another possible web service running that showed in `/var/www/` directory where it seems a little bit odd for `ispconfig` owned by root. Then checking network statistics shows the open port that are run locally which may link to the `ispconfig`. 
+
+![image](/assets/img/dirispconfig.png){: .mx-auto.d-block :}
+
+![image](/assets/img/netstat.png){: .mx-auto.d-block :}
+
+To access the web ispconfig on our attacker machine, we will use `chisel` to port forward the internal service `ispconfig` to our attacker machine. This will need to setup for both server(attacker machine) and client (victim machine) where we will successfully able to access the internal web service.
+
+{: .box-note}
+**Note:** There is other tools that easy to use, such as `ssh` but for this writeup we will use `chisel`.
+
+![image](/assets/img/chisel.png){: .mx-auto.d-block :}
+
+![image](/assets/img/webispconfig.png){: .mx-auto.d-block :}
+
+Using the password from tobias and username as `admin` we can login into the ispconfig. Further analysis found that the version that ispconfig currently running is `3.2.2` which eventually there is known vulnerablity [CVE-2023-46818](https://nvd.nist.gov/vuln/detail/CVE-2023-46818) effected in this version whereby PHP code injection can be achieved. Since this web are running on high privilage user, using this script from [ajdumanhug](https://github.com/ajdumanhug/CVE-2023-46818) will finally achieved as root!
+
+![image](/assets/img/rootnocturnal.png){: .mx-auto.d-block :}
+
+
+## Summary
 
