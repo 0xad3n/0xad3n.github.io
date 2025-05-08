@@ -51,7 +51,8 @@ In summary, there is only 2 open ports which consist of `ssh` and `http`. Since 
 ## Directory Enumeration
 
 {% highlight bash linenos %}
-└─$ gobuster dir -u http://nocturnal.htb/ -w /usr/share/wordlists/dirb/common.txt                                                                   
+└─$ gobuster dir -u http://nocturnal.htb/ -w /usr/share/wordlists/dirb/common.txt
+
 ===============================================================
 Gobuster v3.6
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
