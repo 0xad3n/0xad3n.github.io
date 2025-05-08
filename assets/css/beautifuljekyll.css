@@ -838,17 +838,17 @@ table {
   display: block;
 }
 table tr {
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid var(--navbar-border-col);
   background-color: var(--page-col);
   margin: 0;
   padding: 0;
 }
 table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: #1a1a1a;
 }
 table tr th,
 table tr td {
-  border: 1px solid #cccccc;
+  border: 1px solid var(--navbar-border-col);
   text-align: left;
   margin: 0;
   padding: 0.375rem 0.8125rem;
