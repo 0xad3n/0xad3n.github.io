@@ -1,17 +1,19 @@
 ---
 layout: post
 title: HTB Nocturnal Writeup
-subtitle: Writeup on pawn machine run on Linux environment with an easy difficulty
+subtitle: Provide an in-depth explanation of exposed credentials, command injection, and leveraging known vulnerabilities in an application to gain root access
 tags: [htb, linux, writeup]
 thumbnail-img: /assets/img/thumb1.png
 author: ad3n
 ---
 
+Nocturnal is a Linux-based machine categorized as Easy difficulty. This post provides a step-by-step walkthrough to gain root access on the machine.
+
 ## Scanning & Enumeration
 
 ### NMAP Scan
 
-{% highlight javascript linenos %}
+{% highlight shell linenos %}
 nmap -A -sC -sV -Pn 10.10.11.64
 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-05-08 06:30 EDT
