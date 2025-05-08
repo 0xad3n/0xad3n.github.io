@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/b9828f3c-5a57-4416-bf9f-4c8989a9809b)---
+---
 layout: post
 title: HTB Nocturnal Writeup
 subtitle: Detailed overview of IDOR, command injection, and exploiting known application vulnerability to gain root access.
@@ -47,7 +47,7 @@ In summary, there is only 2 open ports which consist of `ssh` and `http`. Since 
 {: .box-note}
 **Note:** Add `10.10.11.64` in `/etc/hosts` file and named it to `nocturnal.htb`.
 
-![Webnocturnal](/assets/img/webnocturnal.png){: .mx-auto.d-block :}
+![image](/assets/img/webnocturnal.png){: .mx-auto.d-block :}
 
 ### Directory Enumeration
 
@@ -85,7 +85,7 @@ There is four endpoint discovered through `gobuster` where the interesting one i
 
 Further look into the web reveal endpoint when downloading the file `/view.php?username=test1&file=sample.pdf`. The `username` parameter will be use as a point to enumerate user that available in this web application.
 
-![burp1](/assets/img/burp1.png){: .mx-auto.d-block :}
+![image](/assets/img/burp1.png){: .mx-auto.d-block :}
 
 ### User Enumeration
 
@@ -123,6 +123,6 @@ tobias                  [Status: 200, Size: 3037, Words: 1174, Lines: 129, Durat
 
 Output from the user enumeration reveal that it is vulnerable to insecure direct object reference (IDOR) whereby when visiting each users will reveal what files that available for user to download. From those three users, only amanda has file called `privacy.odt` which reveal the message from nocturnal IT team that exposed amanda temporary password.
 
-![idor](/assets/img/idor.png){: .mx-auto.d-block :}
-![expass](/assets/img/expass.png){: .mx-auto.d-block :}
+![image](/assets/img/idor.png){: .mx-auto.d-block :}
+![image](/assets/img/expass.png){: .mx-auto.d-block :}
 
