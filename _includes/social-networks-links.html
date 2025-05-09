@@ -407,6 +407,30 @@
   </li>
   {%- endif -%}
 
+  {%- if network[0] == "tryhackme" -%}
+  <li class="list-inline-item">
+    <a href="https://tryhackme.com/p/{{ network[1] }}" title="TryHackMe">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-tryhackme fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">TryHackMe</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if network[0] == "hackthebox" -%}
+  <li class="list-inline-item">
+    <a href=https://app.hackthebox.com/profile/{{ network[1] }}" title="Hack The Box">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-hackthebox fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Hack The Box</span>
+    </a>
+  </li>
+{%- endif -%}
+
 {%- endfor -%}
 
 </ul>
