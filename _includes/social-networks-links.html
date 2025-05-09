@@ -410,7 +410,10 @@
   {%- if network[0] == "tryhackme" -%}
   <li class="list-inline-item">
     <a href="https://tryhackme.com/p/{{ network[1] }}" title="TryHackMe">
-      <img src="{{ site.baseurl }}/assets/img/tryhackme-icon.svg" alt="TryHackMe" style="width: 30px; height: 30px;"/>
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <span class="circle-background"></span>
+        <img src="{{ site.baseurl }}/assets/img/tryhackme-icon.svg" alt="TryHackMe" style="width: 30px; height: 30px;"/>
+      </span>
       <span class="sr-only">TryHackMe</span>
     </a>
   </li>
@@ -419,7 +422,10 @@
 {%- if network[0] == "hackthebox" -%}
   <li class="list-inline-item">
     <a href=https://app.hackthebox.com/profile/{{ network[1] }}" title="Hack The Box">
-      <img src="{{ site.baseurl }}/assets/img/hackthebox-icon.svg" alt="Hack The Box" style="width: 30px; height: 30px;"/>
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <span class="circle-background"></span>
+        <img src="{{ site.baseurl }}/assets/img/hackthebox-icon.svg" alt="Hack The Box" style="width: 30px; height: 30px;"/>
+      </span>
       <span class="sr-only">Hack The Box</span>
     </a>
   </li>
