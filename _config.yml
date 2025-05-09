@@ -54,7 +54,6 @@ social-network-links:
 # rss: true  # remove this line if you don't want to show an RSS link at the bottom
 # facebook: deanattali
   github: 0xad3n
-  hackthebox: 1399816
   twitter: 0xad3n
 # patreon: DeanAttali
 # youtube: "@daattali"
@@ -70,6 +69,7 @@ social-network-links:
 # telephone: +14159998888
 # steam: deanat78
 # twitch: yourname
+  hackthebox: 1399816
   tryhackme: ad3n 
 # yelp: yourname
 # telegram: yourname
