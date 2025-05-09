@@ -203,7 +203,7 @@ When exploring through the directory, it is reveal that there is another interes
 
 ## Privilege Escalation To Root
 
-Upon analyze on the server reveal that there is another possible web service running that showed in `/var/www/` directory where it seems a little bit odd for `ispconfig` owned by root. Then checking network statistics shows the open port that are run locally which may link to the `ispconfig`. 
+Upon analyze on the server reveal that there is another possible web service running that showed in `/var/www/` directory where it seems a little bit odd for `ispconfig` owned by root. Then checking network statistics shows the open port at `127.0.0.1:8080` that are run locally which may link to the `ispconfig`. 
 
 ![image](/assets/img/dirispconfig.png){: .mx-auto.d-block :}
 
