@@ -20,7 +20,8 @@ author: 0xad3n
 ###############################################
 
 navbar-links:
-  About Me: "aboutme"
+  Tag: "tags"  
+  About: "aboutme"
 # Resources:
 #   - Beautiful Jekyll: "https://beautifuljekyll.com"
 #   - Learn markdown: "https://www.markdowntutorial.com/"
@@ -155,7 +156,7 @@ footer-hover-col: "#5F9EA0"
 
 #navbar-img: "/assets/img/bgimage.png"
 #footer-img: "/assets/img/bgimage.png"
-#page-img: "/assets/img/bgimage.png"
+#page-img: "/assets/img/bg.png"
 
 # Suggest a colour for mobile browsers to use as the browser's theme. This is only supported by a few mobile browsers.
 #mobile-theme-col: "#0085A1"

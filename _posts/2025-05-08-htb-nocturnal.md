@@ -186,7 +186,7 @@ if ($password === false) {
 
 ![image](/assets/img/burp2.png){: .mx-auto.d-block :}
 
-When exploring through the directory, it is reveal that there is another interesting file called `./nocturnal_database/nocturnal_database.db` which exposed all the users and password hashes through encoded the file to base64 to exfiltrate the database. On all of the three password hashes, only tobias and kavi are able to be decrypted which lead to just tobias can make connection through ssh with the exposed credential.
+When exploring through the directory, it is reveal that there is another interesting file called `./nocturnal_database/nocturnal_database.db` which exposed all the users and password hashes through encoded the file to base64 to exfiltrate the database. On all of the four password hashes, only tobias and kavi are able to be decrypted which lead to just tobias can make connection through ssh with the exposed credential.
 
 ![image](/assets/img/burp3.png){: .mx-auto.d-block :}
 
